@@ -4,7 +4,6 @@
 (require json)
 (require gregor)
 (require net/http-easy)
-(require racket/cmdline)
 
 #| Update the cached values |#
 
@@ -44,7 +43,7 @@
                  "sunsets.json" ; TODO
                  read-json))])
     (if (< (minutes-between (now) (iso8601->datetime sunset)) 5)
-      (process "/usr/sbin/uhubctl --ports 2 -a 1") ; TODO
+      (process "/usr/sbin/uhubctl --location 1-1 --ports 2 -a 1") ; TODO
       #f)))
 
 (define (main)
