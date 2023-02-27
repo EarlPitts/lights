@@ -38,11 +38,12 @@
 #| Turn on lights if sunset is near |#
 
 (define (check-and-toggle)
-  (let ([sunset
-          (car (with-input-from-file
-                 "sunsets.json" ; TODO
-                 read-json))])
-    (if (< (minutes-between (now) (iso8601->datetime sunset)) 5)
+  (let* ([sunset
+           (car (with-input-from-file
+                  "sunsets.json" ; TODO
+                  read-json))]
+         [diff (minutes-between (now) (iso8601->datetime sunset))])
+    (if (and (< diff 5) (> diff 0))
       (process "/usr/sbin/uhubctl --location 1-1 --ports 2 -a 1") ; TODO
       #f)))
 
