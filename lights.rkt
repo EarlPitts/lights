@@ -42,7 +42,7 @@
            (car (with-input-from-file
                   "sunsets.json" ; TODO
                   read-json))]
-         [diff (minutes-between (now) (iso8601->datetime sunset))])
+         [diff (minutes-between (now #:tz 0) (iso8601->datetime sunset))])
     (if (and (< diff 5) (> diff 0))
       (process "/usr/sbin/uhubctl --location 1-1 --ports 2 -a 1") ; TODO
       #f)))
